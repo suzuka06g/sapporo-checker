@@ -1,0 +1,17 @@
+name: Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  hello:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Python
+        run: python3 --version
+
+      - name: Hello
+        run: echo "こんにちは！GitHub Actions成功！
