@@ -14,4 +14,4 @@ jobs:
         run: python3 --version
 
       - name: Hello
-        run: echo "こんにちは！GitHub Actions成功！
+        run: echo "こんにちは！GitHub Actions成功！"
