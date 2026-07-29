@@ -45,6 +45,11 @@ await page.locator("input").nth(0).click({ force: true });
 
 await page.waitForTimeout(3000);
 
+  const options = await page.locator('[role="option"]').allInnerTexts();
+
+console.log("候補:");
+console.log(options);
+
   const inputInfo = await page.locator("input").nth(0).evaluate((e) => {
   return {
     outer: e.outerHTML,
