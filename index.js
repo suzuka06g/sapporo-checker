@@ -48,6 +48,15 @@ const suggestions = await page.locator("body").innerText();
 console.log("候補確認:");
 console.log(suggestions.slice(0, 2500));
 
+  const texts = await page.locator("*").evaluateAll((els) =>
+  els
+    .map((e) => e.innerText)
+    .filter((t) => t && t.includes("よ"))
+);
+
+console.log("よが含まれる文字:");
+console.log(texts);
+
 await page.waitForTimeout(3000);
 
 const bodyText = await page.locator("body").innerText();
