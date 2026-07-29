@@ -31,10 +31,18 @@ const { chromium } = require("playwright");
   console.log("HTML文字数:", html.length);
   console.log(html.slice(0, 300));
   
-const links = await page.locator("a").allInnerTexts();
+const link = page.getByText("施設一覧・検索へ");
 
-console.log("リンク一覧:");
-console.log(links.slice(0, 30));
+await link.click();
+
+await page.waitForTimeout(3000);
+
+console.log("施設検索ページへ移動しました！");
+console.log("URL:", page.url());
+
+const text = await page.locator("body").innerText();
+
+console.log(text.slice(0, 500));
   
   await browser.close();
 })();
