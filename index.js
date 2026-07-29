@@ -26,28 +26,19 @@ const { chromium } = require("playwright");
 
   await page.waitForTimeout(5000);
 
-  const html = await page.content();
+  const link = page.getByText("施設一覧・検索へ");
 
-  console.log("HTML文字数:", html.length);
-  console.log(html.slice(0, 300));
-  
-const link = page.getByText("施設一覧・検索へ");
+  await link.click();
 
-await link.click();
+  await page.waitForTimeout(3000);
 
-await page.waitForTimeout(3000);
+  console.log("施設検索ページへ移動しました！");
+  console.log("URL:", page.url());
 
-console.log("施設検索ページへ移動しました！");
-console.log("URL:", page.url());
+  const searchText = await page.locator("body").innerText();
 
-  const text = await page.locator("body").innerText();
+  console.log("検索ページ内容:");
+  console.log(searchText.slice(0, 1000));
 
-console.log("検索ページ内容:");
-console.log(text.slice(0, 1000));
-
-const text = await page.locator("body").innerText();
-
-console.log(text.slice(0, 500));
-  
   await browser.close();
 })();
