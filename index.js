@@ -72,6 +72,15 @@ console.log(text.slice(0,1000));
 
   await page.waitForTimeout(3000);
 
+  await page.locator("input").nth(0).fill("よさこい");
+
+await page.waitForTimeout(3000);
+
+const textAfterInput = await page.locator("body").innerText();
+
+console.log("入力後:");
+console.log(textAfterInput.slice(0,2000));
+
   // 候補確認
   const options = await page.locator('[role="option"]').allInnerTexts();
 
