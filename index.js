@@ -15,65 +15,27 @@ const { chromium } = require("playwright");
   });
 
   await page.goto(
-    "https://yoyaku.harp.lg.jp/sapporo/",
+    "https://yoyaku.harp.lg.jp/sapporo/FacilitySearch/Index",
     {
       waitUntil: "networkidle",
       timeout: 60000
     }
   );
 
-  console.log("ページを開きました！");
-
-  console.log("タイトル:", await page.title());
+  console.log("検索画面を開きました！");
 
   await page.waitForTimeout(10000);
 
-  const link = page.getByText("施設一覧・検索へ");
+  const inputs = await page.locator("input").evaluateAll((els) =>
+    els.map((e, i) => ({
+      index: i,
+      type: e.type,
+      placeholder: e.placeholder
+    }))
+  );
 
-  await link.click();
+  console.log("入力欄:");
+  console.log(inputs);
 
-  await page.waitForTimeout(3000);
-
-  console.log("施設検索ページへ移動しました！");
-  console.log("URL:", page.url());
-
-  await page.waitForTimeout(10000);
-
-console.log("移動後タイトル:", await page.title());
-
-const htmlCheck = await page.content();
-console.log("移動後HTML長さ:", htmlCheck.length);
-
-  const frames = page.frames();
-
-console.log("iframe数:", frames.length);
-
-for (const frame of frames) {
-  console.log("frame URL:", frame.url());
-}
-
-  const placeholders = await page.locator("input").evaluateAll((els) =>
-  els.map((e, i) => ({
-    index: i,
-    type: e.type,
-    placeholder: e.placeholder
-  }))
-);
-
-console.log("入力欄詳細:");
-console.log(placeholders);
-
-const buttons = await page.locator("button").allInnerTexts();
-
-console.log("ボタン:");
-console.log(buttons);
-
-  const links = await page.locator("a").allInnerTexts();
-
-console.log("リンク一覧:");
-console.log(links.slice(0, 50));
-
-  console.log("HTML長さ:", (await page.content()).length);
-  
   await browser.close();
 })();
