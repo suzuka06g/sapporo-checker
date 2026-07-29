@@ -16,10 +16,10 @@ const { chromium } = require("playwright");
 
   console.log("ページを開きました！");
 
-  const text = await page.locator("body").innerText();
+  const html = await page.content();
 
-console.log("取得した文字数:", text.length);
-console.log("ここまで読めました！");
+console.log("HTML文字数:", html.length);
+console.log(html.slice(0, 500));
 
   await browser.close();
 })();
