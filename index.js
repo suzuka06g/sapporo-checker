@@ -42,6 +42,16 @@ await page.locator("input").nth(0).click();
 
 await page.waitForTimeout(2000);
 
+  await page.locator("input").nth(0).click();
+
+await page.waitForTimeout(2000);
+
+// 画面内の文字を全部確認
+const allText = await page.locator("body").innerText();
+
+console.log("開いた一覧:");
+console.log(allText.slice(0,5000));
+
 const text = await page.locator("body").innerText();
 
 console.log("目的選択後:");
