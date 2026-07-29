@@ -46,6 +46,24 @@ await page.waitForTimeout(2000);
 
 await page.waitForTimeout(2000);
 
+  // 画面内の候補っぽい要素を探す
+const items = await page.locator('[role="option"]').evaluateAll((els) =>
+  els.map(e => e.innerText)
+);
+
+console.log("候補一覧:");
+console.log(items);
+
+  const divs = await page.locator("div").evaluateAll((els) =>
+  els
+    .map(e => e.innerText)
+    .filter(t => t && t.length < 50)
+    .slice(0,100)
+);
+
+console.log("div一覧:");
+console.log(divs);
+
 // 画面内の文字を全部確認
 const allText = await page.locator("body").innerText();
 
