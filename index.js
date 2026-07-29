@@ -37,7 +37,14 @@ const { chromium } = require("playwright");
   console.log("入力欄:");
   console.log(inputs);
 
-  await page.locator("input").nth(0).fill("よさこい");
+  await page.locator("input").nth(0).click();
+
+await page.waitForTimeout(2000);
+
+const text = await page.locator("body").innerText();
+
+console.log("目的選択後:");
+console.log(text.slice(0, 3000));
 
 console.log("利用目的入力テスト完了！");
 
