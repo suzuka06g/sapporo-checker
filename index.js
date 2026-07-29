@@ -15,7 +15,7 @@ const { chromium } = require("playwright");
   );
 
   console.log("ページを開きました！");
-  console.log("タイトル:", await page.title());
 
-  await browser.close();
-})();
+const text = await page.locator("body").innerText();
+
+console.log(text.slice(0, 500));
