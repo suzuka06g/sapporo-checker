@@ -64,6 +64,13 @@ const afterClick = await page.locator("body").innerText();
 console.log("クリック後の画面:");
 console.log(afterClick.slice(0,3000));
 
+  const html = await page.content();
+
+console.log("HTMLによさこいある？");
+console.log(html.includes("よさこい"));
+
+console.log("HTMLに学校開放ある？");
+console.log(html.includes("学校開放"));
   // 候補確認
   const bodyText = await page.locator("body").innerText();
 
