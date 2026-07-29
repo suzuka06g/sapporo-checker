@@ -40,6 +40,11 @@ await page.waitForTimeout(3000);
 console.log("施設検索ページへ移動しました！");
 console.log("URL:", page.url());
 
+  const text = await page.locator("body").innerText();
+
+console.log("検索ページ内容:");
+console.log(text.slice(0, 1000));
+
 const text = await page.locator("body").innerText();
 
 console.log(text.slice(0, 500));
