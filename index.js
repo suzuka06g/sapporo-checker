@@ -16,10 +16,12 @@ const { chromium } = require("playwright");
 
   console.log("ページを開きました！");
 
-  const html = await page.content();
+  const frame = page.frameLocator("#main-iframe");
 
-console.log("HTML文字数:", html.length);
-console.log(html.slice(0, 500));
+const text = await frame.locator("body").innerText();
+
+console.log("iframe文字数:", text.length);
+console.log(text.slice(0, 500));
 
   await browser.close();
 })();
