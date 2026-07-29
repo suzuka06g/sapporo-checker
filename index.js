@@ -46,6 +46,14 @@ await page.waitForTimeout(2000);
 
 await page.waitForTimeout(2000);
 
+  const clickable = await page.locator("button, a, li, div").evaluateAll((els) =>
+  els
+    .map((e) => e.innerText)
+    .filter((t) => t && t.length < 50)
+);
+
+console.log("クリック候補:");
+console.log(clickable);
   // 画面内の候補っぽい要素を探す
 const items = await page.locator('[role="option"]').evaluateAll((els) =>
   els.map(e => e.innerText)
