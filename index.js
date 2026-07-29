@@ -48,6 +48,15 @@ console.log("目的選択後:");
 console.log(text.includes("よさこい"));
 console.log(text.slice(-3000));
 
+  const allTexts = await page.locator("*").evaluateAll((els) =>
+  els
+    .map(e => e.innerText)
+    .filter(t => t && t.includes("よ"))
+);
+
+console.log("よが入る要素:");
+console.log(allTexts);
+
   await page.waitForTimeout(2000);
 
 const suggestions = await page.locator("body").innerText();
