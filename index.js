@@ -38,7 +38,9 @@ const { chromium } = require("playwright");
   console.log(inputs);
 
   // 利用目的クリック後の確認
-await page.getByText("利用目的", { exact: true }).click();
+await page.locator("input").nth(0).click();
+
+await page.waitForTimeout(3000);
 
 await page.waitForTimeout(3000);
 
