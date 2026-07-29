@@ -150,11 +150,11 @@ console.log(textAfterInput.slice(0,2000));
   console.log("検索後URL:");
   console.log(page.url());
 
-  const resultText = await page.locator("body").innerText();
+  const searchResultText = await page.locator("body").innerText();
 
 console.log("検索結果確認:");
-console.log(resultText.includes("ネット申込"));
-console.log(resultText.slice(0,2000));
+console.log(searchResultText.includes("ネット申込"));
+console.log(searchResultText.slice(0,2000));
 
   const resultText = await page.locator("body").innerText();
 
