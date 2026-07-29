@@ -46,6 +46,18 @@ await page.waitForTimeout(2000);
 
 await page.waitForTimeout(2000);
 
+  await page.locator("input").nth(0).click();
+
+await page.waitForTimeout(3000);
+
+const text = await page.locator("body").innerText();
+
+console.log("よさこいある？");
+console.log(text.includes("よさこい"));
+
+console.log("学校開放ある？");
+console.log(text.includes("学校開放"));
+
   const clickable = await page.locator("button, a, li, div").evaluateAll((els) =>
   els
     .map((e) => e.innerText)
