@@ -152,6 +152,12 @@ console.log(textAfterInput.slice(0,2000));
 
   const resultText = await page.locator("body").innerText();
 
+console.log("検索結果確認:");
+console.log(resultText.includes("ネット申込"));
+console.log(resultText.slice(0,2000));
+
+  const resultText = await page.locator("body").innerText();
+
   console.log(resultText.slice(0, 1000));
 
   await browser.close();
