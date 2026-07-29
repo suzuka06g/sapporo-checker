@@ -45,5 +45,17 @@ console.log("施設名入力テスト完了！");
 
 console.log("日付入力テスト完了！");
 
+  await page.getByText("検索", { exact: true }).click();
+
+console.log("検索ボタン押しました！");
+
+await page.waitForTimeout(5000);
+
+console.log("検索後URL:", page.url());
+
+const resultText = await page.locator("body").innerText();
+
+console.log(resultText.slice(0, 1000));
+
   await browser.close();
 })();
