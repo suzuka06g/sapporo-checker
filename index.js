@@ -43,17 +43,16 @@ for (const frame of frames) {
   console.log("frame URL:", frame.url());
 }
 
-  const inputs = await page.locator("input").evaluateAll((els) =>
-  els.map((e) => ({
+  const placeholders = await page.locator("input").evaluateAll((els) =>
+  els.map((e, i) => ({
+    index: i,
     type: e.type,
-    name: e.name,
-    placeholder: e.placeholder,
-    value: e.value
+    placeholder: e.placeholder
   }))
 );
 
-console.log("入力欄:");
-console.log(inputs);
+console.log("入力欄詳細:");
+console.log(placeholders);
 
 const buttons = await page.locator("button").allInnerTexts();
 
