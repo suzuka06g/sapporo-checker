@@ -24,8 +24,10 @@ const { chromium } = require("playwright");
 
   console.log("検索画面を開きました！");
 
-  await page.waitForTimeout(10000);
+  await page.waitForTimeout(5000);
 
+
+  // 入力欄確認
   const inputs = await page.locator("input").evaluateAll((els) =>
     els.map((e, i) => ({
       index: i,
@@ -37,125 +39,52 @@ const { chromium } = require("playwright");
   console.log("入力欄:");
   console.log(inputs);
 
-  // 利用目的クリック後の確認
-await page.locator("input").nth(0).click();
 
-await page.waitForTimeout(3000);
+  // 利用目的を開く
+  await page.locator("input").nth(0).click();
 
-await page.waitForTimeout(3000);
+  await page.waitForTimeout(3000);
 
-const purposeCheck = await page.locator("body").innerText();
 
-console.log("よさこいある？");
-console.log(purposeCheck.includes("よさこい"));
+  // 候補確認
+  const bodyText = await page.locator("body").innerText();
 
-console.log("学校開放ある？");
-console.log(purposeCheck.includes("学校開放"));
-const purposeText = await page.locator("body").innerText();
+  console.log("よさこいある？");
+  console.log(bodyText.includes("よさこい"));
 
-console.log("よさこいある？");
-console.log(purposeText.includes("よさこい"));
+  console.log("学校開放ある？");
+  console.log(bodyText.includes("学校開放"));
 
-console.log("学校開放ある？");
-console.log(purposeText.includes("学校開放"));
 
-  const clickable = await page.locator("button, a, li, div").evaluateAll((els) =>
-  els
-    .map((e) => e.innerText)
-    .filter((t) => t && t.length < 50)
-);
-
-console.log("クリック候補:");
-console.log(clickable);
-  // 画面内の候補っぽい要素を探す
-const items = await page.locator('[role="option"]').evaluateAll((els) =>
-  els.map(e => e.innerText)
-);
-
-console.log("候補一覧:");
-console.log(items);
-
-  const divs = await page.locator("div").evaluateAll((els) =>
-  els
-    .map(e => e.innerText)
-    .filter(t => t && t.length < 50)
-    .slice(0,100)
-);
-
-console.log("div一覧:");
-console.log(divs);
-
-// 画面内の文字を全部確認
-const allText = await page.locator("body").innerText();
-
-console.log("開いた一覧:");
-console.log(allText.slice(0,5000));
-
-const text = await page.locator("body").innerText();
-
-console.log("目的選択後:");
-console.log(text.includes("よさこい"));
-console.log(text.slice(-3000));
-
-  const allTexts = await page.locator("*").evaluateAll((els) =>
-  els
-    .map(e => e.innerText)
-    .filter(t => t && t.includes("よ"))
-);
-
-console.log("よが入る要素:");
-console.log(allTexts);
-
-  await page.waitForTimeout(2000);
-
-  const buttons = await page.locator("button").allInnerTexts();
-
-console.log("ボタン一覧:");
-console.log(buttons);
-
-const suggestions = await page.locator("body").innerText();
-
-console.log("候補確認:");
-console.log(suggestions.slice(0, 2500));
-
-  const texts = await page.locator("*").evaluateAll((els) =>
-  els
-    .map((e) => e.innerText)
-    .filter((t) => t && t.includes("よ"))
-);
-
-console.log("よが含まれる文字:");
-console.log(texts);
-
-await page.waitForTimeout(3000);
-
-const bodyText = await page.locator("body").innerText();
-
-console.log(bodyText.slice(0, 1500));
-
+  // 施設名入力
   await page.locator("input").nth(4).fill("学校");
 
-  const selects = await page.locator("select").count();
+  console.log("施設入力完了");
 
-console.log("select数:", selects);
 
-console.log("施設名入力テスト完了！");
-
+  // 日付入力
   await page.locator("input").nth(6).fill("20260801");
 
-console.log("日付入力テスト完了！");
+  console.log("日付入力完了");
 
+
+  // 検索
   await page.getByText("検索", { exact: true }).click();
 
-console.log("検索ボタン押しました！");
+  console.log("検索ボタン押しました！");
 
-await page.waitForTimeout(5000);
 
-console.log("検索後URL:", page.url());
+  await page.waitForTimeout(5000);
 
-const resultText = await page.locator("body").innerText();
+  console.log("検索後URL:");
+  console.log(page.url());
 
-console.log(resultText.slice(0, 1000));
+
+  const resultText = await page.locator("body").innerText();
+
+  console.log(resultText.slice(0, 1000));
+
 
   await browser.close();
+
 })();
