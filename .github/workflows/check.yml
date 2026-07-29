@@ -18,5 +18,11 @@ jobs:
         with:
           node-version: 24
 
+      - name: 依存関係インストール
+        run: npm install
+
+      - name: Playwright準備
+        run: npx playwright install --with-deps
+
       - name: 実行
         run: node index.js
