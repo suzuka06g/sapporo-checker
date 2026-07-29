@@ -40,10 +40,19 @@ const { chromium } = require("playwright");
   console.log(inputs);
 
 
-  // 利用目的を開く
-  await page.locator("input").nth(0).click();
+  // 利用目的の周辺をクリック
+await page.locator("input").nth(0).click({ force: true });
 
-  await page.waitForTimeout(3000);
+await page.waitForTimeout(3000);
+
+  const inputInfo = await page.locator("input").nth(0).evaluate((e) => {
+  return {
+    outer: e.outerHTML,
+    parent: e.parentElement.outerHTML
+  };
+});
+
+console.log(inputInfo);
   
 const afterClick = await page.locator("body").innerText();
 
