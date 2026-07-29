@@ -1,0 +1,9 @@
+{
+  "name": "sapporo-checker",
+  "version": "1.0.0",
+  "description": "札幌市予約チェック",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  }
+}
