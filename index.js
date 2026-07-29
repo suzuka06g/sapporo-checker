@@ -37,5 +37,9 @@ const { chromium } = require("playwright");
   console.log("入力欄:");
   console.log(inputs);
 
+  await page.locator("input").nth(4).fill("学校");
+
+console.log("施設名入力テスト完了！");
+
   await browser.close();
 })();
