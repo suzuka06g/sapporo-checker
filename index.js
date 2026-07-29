@@ -41,5 +41,9 @@ const { chromium } = require("playwright");
 
 console.log("施設名入力テスト完了！");
 
+  await page.locator("input").nth(6).fill("20260801");
+
+console.log("日付入力テスト完了！");
+
   await browser.close();
 })();
