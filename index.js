@@ -59,6 +59,13 @@ const buttons = await page.locator("button").allInnerTexts();
 
 console.log("ボタン:");
 console.log(buttons);
+
+  const links = await page.locator("a").allInnerTexts();
+
+console.log("リンク一覧:");
+console.log(links.slice(0, 50));
+
+  console.log("HTML長さ:", (await page.content()).length);
   
   await browser.close();
 })();
