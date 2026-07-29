@@ -42,14 +42,13 @@ await page.getByText("利用目的", { exact: true }).click();
 
 await page.waitForTimeout(3000);
 
-const purposeText = await page.locator("body").innerText();
+const purposeCheck = await page.locator("body").innerText();
 
 console.log("よさこいある？");
-console.log(purposeText.includes("よさこい"));
+console.log(purposeCheck.includes("よさこい"));
 
 console.log("学校開放ある？");
-console.log(purposeText.includes("学校開放"));
-
+console.log(purposeCheck.includes("学校開放"));
 const purposeText = await page.locator("body").innerText();
 
 console.log("よさこいある？");
