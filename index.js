@@ -35,10 +35,13 @@ const { chromium } = require("playwright");
   console.log("施設検索ページへ移動しました！");
   console.log("URL:", page.url());
 
-  const searchText = await page.locator("body").innerText();
+  const frames = page.frames();
 
-  console.log("検索ページ内容:");
-  console.log(searchText.slice(0, 1000));
+console.log("iframe数:", frames.length);
+
+for (const frame of frames) {
+  console.log("frame URL:", frame.url());
+}
 
   await browser.close();
 })();
