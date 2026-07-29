@@ -38,13 +38,17 @@ const { chromium } = require("playwright");
   console.log(inputs);
 
   // 利用目的クリック後の確認
-await page.locator("input").nth(0).click();
+await page.getByText("利用目的", { exact: true }).click();
 
 await page.waitForTimeout(3000);
 
-  await page.locator("input").nth(0).click();
+const purposeText = await page.locator("body").innerText();
 
-await page.waitForTimeout(3000);
+console.log("よさこいある？");
+console.log(purposeText.includes("よさこい"));
+
+console.log("学校開放ある？");
+console.log(purposeText.includes("学校開放"));
 
 const purposeText = await page.locator("body").innerText();
 
