@@ -41,6 +41,13 @@ const { chromium } = require("playwright");
 
 console.log("利用目的入力テスト完了！");
 
+  await page.waitForTimeout(2000);
+
+const suggestions = await page.locator("body").innerText();
+
+console.log("候補確認:");
+console.log(suggestions.slice(0, 2500));
+
 await page.waitForTimeout(3000);
 
 const bodyText = await page.locator("body").innerText();
