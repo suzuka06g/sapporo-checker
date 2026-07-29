@@ -43,14 +43,14 @@ const { chromium } = require("playwright");
 
   await page.waitForTimeout(5000);
 
-  const html = await page.content();
+  const htmlCheck = await page.content();
 
 console.log("よさこいHTML確認:");
-console.log(html.includes("よさこい"));
+console.log(htmlCheck.includes("よさこい"));
 
 console.log("purpose確認:");
-console.log(html.includes("utilizationPurpose"));
-console.log(html.includes("purposeId"));
+console.log(htmlCheck.includes("utilizationPurpose"));
+console.log(htmlCheck.includes("purposeId"));
 
   const response = await page.request.get(
   "https://yoyaku.harp.lg.jp/sapporo/FacilitySearch/SearchUtilizationPurpose?utilizationPurposeName=よさこい"
