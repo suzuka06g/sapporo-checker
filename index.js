@@ -143,22 +143,22 @@ console.log(textAfterInput.slice(0,2000));
   // 検索
   await page.getByText("検索", { exact: true }).click();
 
-  console.log("検索ボタン押しました！");
+console.log("検索ボタン押しました！");
 
-  await page.waitForTimeout(5000);
+// 検索結果が出るまで待つ
+await page.waitForTimeout(10000);
+
+console.log("10秒待機完了");
+
+const afterSearch = await page.locator("body").innerText();
+
+console.log("検索後画面:");
+console.log(afterSearch.slice(0,3000));
 
   console.log("検索後URL:");
   console.log(page.url());
 
-  const searchResultText = await page.locator("body").innerText();
-
-console.log("検索結果確認:");
-console.log(searchResultText.includes("ネット申込"));
-console.log(searchResultText.slice(0,2000));
-
-  const resultText = await page.locator("body").innerText();
-
-  console.log(resultText.slice(0, 1000));
+  
 
   await browser.close();
 })();
