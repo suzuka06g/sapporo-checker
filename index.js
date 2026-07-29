@@ -59,6 +59,11 @@ console.log(allTexts);
 
   await page.waitForTimeout(2000);
 
+  const buttons = await page.locator("button").allInnerTexts();
+
+console.log("ボタン一覧:");
+console.log(buttons);
+
 const suggestions = await page.locator("body").innerText();
 
 console.log("候補確認:");
