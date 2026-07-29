@@ -10,5 +10,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: hello
-        run: echo "自動実行テスト成功！"
+      - name: コード取得
+        uses: actions/checkout@v4
+
+      - name: Node.js準備
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: 実行
+        run: node index.js
