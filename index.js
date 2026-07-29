@@ -30,6 +30,11 @@ const { chromium } = require("playwright");
 
   console.log("HTML文字数:", html.length);
   console.log(html.slice(0, 300));
+  
+const links = await page.locator("a").allInnerTexts();
 
+console.log("リンク一覧:");
+console.log(links.slice(0, 30));
+  
   await browser.close();
 })();
