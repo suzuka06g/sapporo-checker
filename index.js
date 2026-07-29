@@ -37,6 +37,16 @@ const { chromium } = require("playwright");
   console.log("入力欄:");
   console.log(inputs);
 
+  await page.locator("input").nth(0).fill("よさこい");
+
+console.log("利用目的入力テスト完了！");
+
+await page.waitForTimeout(3000);
+
+const bodyText = await page.locator("body").innerText();
+
+console.log(bodyText.slice(0, 1500));
+
   await page.locator("input").nth(4).fill("学校");
 
   const selects = await page.locator("select").count();
