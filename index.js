@@ -39,6 +39,10 @@ const { chromium } = require("playwright");
 
   await page.locator("input").nth(4).fill("学校");
 
+  const selects = await page.locator("select").count();
+
+console.log("select数:", selects);
+
 console.log("施設名入力テスト完了！");
 
   await page.locator("input").nth(6).fill("20260801");
