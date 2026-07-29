@@ -141,9 +141,15 @@ console.log(textAfterInput.slice(0,2000));
   console.log("日付入力完了");
 
   // 検索
-  await page.getByText("検索", { exact: true }).click();
+  console.log("検索開始");
 
-console.log("検索ボタン押しました！");
+await Promise.all([
+  page.waitForURL("**/FacilitySearch/Index?**", { timeout: 10000 }),
+  page.getByText("検索", { exact: true }).click()
+]);
+
+console.log("検索後URL:");
+console.log(page.url());
 
 // 検索結果が出るまで待つ
 await page.waitForTimeout(10000);
