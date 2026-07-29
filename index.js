@@ -44,7 +44,11 @@ const { chromium } = require("playwright");
   await page.locator("input").nth(0).click();
 
   await page.waitForTimeout(3000);
+  
+const afterClick = await page.locator("body").innerText();
 
+console.log("クリック後の画面:");
+console.log(afterClick.slice(0,3000));
 
   // 候補確認
   const bodyText = await page.locator("body").innerText();
