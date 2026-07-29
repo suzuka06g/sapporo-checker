@@ -40,11 +40,7 @@ const { chromium } = require("playwright");
   // 利用目的クリック後の確認
 await page.locator("input").nth(0).click();
 
-await page.waitForTimeout(2000);
-
-  await page.locator("input").nth(0).click();
-
-await page.waitForTimeout(2000);
+await page.waitForTimeout(3000);
 
   await page.locator("input").nth(0).click();
 
