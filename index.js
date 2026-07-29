@@ -18,7 +18,8 @@ const { chromium } = require("playwright");
 
   const text = await page.locator("body").innerText();
 
-  console.log(text.slice(0, 500));
+console.log("取得した文字数:", text.length);
+console.log("ここまで読めました！");
 
   await browser.close();
 })();
