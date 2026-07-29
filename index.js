@@ -16,17 +16,20 @@ const { chromium } = require("playwright");
 
   // 通信を監視
   page.on("response", async (response) => {
-    const url = response.url();
+  const url = response.url();
 
-    if (
-      url.includes("purpose") ||
-      url.includes("Purpose") ||
-      url.includes("list") ||
-      url.includes("master")
-    ) {
-      console.log("通信:", url);
+  if (url.includes("SearchUtilizationPurpose")) {
+    console.log("通信:", url);
+
+    try {
+      const text = await response.text();
+      console.log("レスポンス:");
+      console.log(text);
+    } catch (e) {
+      console.log("レスポンス取得失敗");
     }
-  });
+  }
+});
 
   await page.goto(
     "https://yoyaku.harp.lg.jp/sapporo/FacilitySearch/Index",
