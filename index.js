@@ -5,23 +5,31 @@ const { chromium } = require("playwright");
     headless: true
   });
 
-  const page = await browser.newPage();
+  const page = await browser.newPage({
+    userAgent:
+      "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 Version/17.0 Mobile/15E148 Safari/604.1",
+    viewport: {
+      width: 390,
+      height: 844
+    }
+  });
 
   await page.goto(
     "https://yoyaku.harp.lg.jp/sapporo/",
     {
-      waitUntil: "networkidle"
+      waitUntil: "networkidle",
+      timeout: 60000
     }
   );
 
   console.log("ページを開きました！");
 
-  const frame = page.frameLocator("#main-iframe");
+  await page.waitForTimeout(5000);
 
-const text = await frame.locator("body").innerText();
+  const html = await page.content();
 
-console.log("iframe文字数:", text.length);
-console.log(text.slice(0, 500));
+  console.log("HTML文字数:", html.length);
+  console.log(html.slice(0, 300));
 
   await browser.close();
 })();
