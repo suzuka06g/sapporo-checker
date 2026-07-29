@@ -1,6 +1,7 @@
 const { chromium } = require("playwright");
 
 (async () => {
+
   const browser = await chromium.launch({
     headless: true
   });
@@ -8,29 +9,42 @@ const { chromium } = require("playwright");
   const page = await browser.newPage({
     userAgent:
       "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 Version/17.0 Mobile/15E148 Safari/604.1",
+
     viewport: {
       width: 390,
       height: 844
     }
   });
 
-  // 通信を監視
+
+  // 通信監視
   page.on("response", async (response) => {
-  const url = response.url();
 
-  if (url.includes("SearchUtilizationPurpose")) {
-    console.log("通信:", url);
+    const responseUrl = response.url();
 
-    try {
-      const text = await response.text();
-      console.log("レスポンス:");
-      console.log(text);
-    } catch (e) {
-      console.log("レスポンス取得失敗");
+    if (responseUrl.includes("SearchUtilizationPurpose")) {
+
+      console.log("通信:", responseUrl);
+
+      try {
+
+        const responseText = await response.text();
+
+        console.log("レスポンス:");
+        console.log(responseText);
+
+      } catch (error) {
+
+        console.log("レスポンス取得失敗");
+
+      }
     }
-  }
-});
 
+  });
+
+
+
+  // 検索ページへ
   await page.goto(
     "https://yoyaku.harp.lg.jp/sapporo/FacilitySearch/Index",
     {
@@ -39,132 +53,123 @@ const { chromium } = require("playwright");
     }
   );
 
+
   console.log("検索画面を開きました！");
+
 
   await page.waitForTimeout(5000);
 
-  const htmlCheck = await page.content();
 
-console.log("よさこいHTML確認:");
-console.log(htmlCheck.includes("よさこい"));
 
-console.log("purpose確認:");
-console.log(htmlCheck.includes("utilizationPurpose"));
-console.log(htmlCheck.includes("purposeId"));
+  // よさこいが存在するか確認
+  const firstHtml = await page.content();
 
-  const response = await page.request.get(
-  "https://yoyaku.harp.lg.jp/sapporo/FacilitySearch/SearchUtilizationPurpose?utilizationPurposeName=よさこい"
-);
+  console.log("よさこいHTML確認:");
+  console.log(firstHtml.includes("よさこい"));
 
-console.log("利用目的通信ステータス:");
-console.log(response.status());
 
-const text = await response.text();
 
-console.log("通信結果:");
-console.log(text.slice(0,1000));
-
-  // 入力欄確認
-  const inputs = await page.locator("input").evaluateAll((els) =>
-    els.map((e, i) => ({
-      index: i,
-      type: e.type,
-      placeholder: e.placeholder
-    }))
-  );
-
-  console.log("入力欄:");
-  console.log(inputs);
-
-  // 利用目的クリック
-  await page.locator("input").nth(0).click({ force: true });
-
-  await page.waitForTimeout(3000);
+  // -------------------------
+  // 利用目的入力
+  // -------------------------
 
   await page.locator("input").nth(0).fill("よさこい");
 
-await page.waitForTimeout(3000);
+  console.log("よさこい入力完了");
 
-const textAfterInput = await page.locator("body").innerText();
 
-console.log("入力後:");
-console.log(textAfterInput.slice(0,2000));
+  await page.waitForTimeout(2000);
 
-  // 候補確認
-  const options = await page.locator('[role="option"]').allInnerTexts();
 
-  console.log("候補:");
-  console.log(options);
+  // 候補クリック
+  await page.getByText("よさこい", {
+    exact: true
+  }).click();
 
-  // inputの情報
-  const inputInfo = await page.locator("input").nth(0).evaluate((e) => {
-    return {
-      outer: e.outerHTML,
-      parent: e.parentElement.outerHTML
-    };
-  });
 
-  console.log(inputInfo);
+  console.log("よさこい選択完了");
 
-  // クリック後の画面
-  const afterClick = await page.locator("body").innerText();
 
-  console.log("クリック後の画面:");
-  console.log(afterClick.slice(0, 3000));
 
-  // HTML確認
-  const html = await page.content();
-
-  console.log("HTMLによさこいある？");
-  console.log(html.includes("よさこい"));
-
-  console.log("HTMLに学校開放ある？");
-  console.log(html.includes("学校開放"));
-
-  // body確認
-  const bodyText = await page.locator("body").innerText();
-
-  console.log("よさこいある？");
-  console.log(bodyText.includes("よさこい"));
-
-  console.log("学校開放ある？");
-  console.log(bodyText.includes("学校開放"));
-
+  // -------------------------
   // 施設入力
+  // -------------------------
+
   await page.locator("input").nth(4).fill("学校");
 
   console.log("施設入力完了");
 
+
+
+  // -------------------------
   // 日付入力
+  // -------------------------
+
   await page.locator("input").nth(6).fill("20260801");
 
   console.log("日付入力完了");
 
+
+
+  // -------------------------
   // 検索
+  // -------------------------
+
   console.log("検索開始");
 
-await Promise.all([
-  page.waitForURL("**/FacilitySearch/Index?**", { timeout: 10000 }),
-  page.getByText("検索", { exact: true }).click()
-]);
 
-console.log("検索後URL:");
-console.log(page.url());
+  await Promise.all([
 
-// 検索結果が出るまで待つ
-await page.waitForTimeout(10000);
+    page.waitForURL(
+      "**/FacilitySearch/Index?**",
+      {
+        timeout: 10000
+      }
+    ),
 
-console.log("10秒待機完了");
+    page.getByText("検索", {
+      exact: true
+    }).click()
 
-const afterSearch = await page.locator("body").innerText();
+  ]);
 
-console.log("検索後画面:");
-console.log(afterSearch.slice(0,3000));
+
 
   console.log("検索後URL:");
+
   console.log(page.url());
 
-  
+
+
+  // 検索結果読み込み待ち
+
+  await page.waitForTimeout(5000);
+
+
+
+  // -------------------------
+  // 結果確認
+  // -------------------------
+
+  const resultBodyText = await page.locator("body").innerText();
+
+
+  console.log("ネット申込ある？");
+
+  console.log(
+    resultBodyText.includes("ネット申込")
+  );
+
+
+  console.log("結果:");
+
+  console.log(
+    resultBodyText.slice(0,3000)
+  );
+
+
 
   await browser.close();
+
+
 })();
