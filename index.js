@@ -24,7 +24,9 @@ const { chromium } = require("playwright");
 
   console.log("ページを開きました！");
 
-  await page.waitForTimeout(5000);
+  console.log("タイトル:", await page.title());
+
+  await page.waitForTimeout(10000);
 
   const link = page.getByText("施設一覧・検索へ");
 
