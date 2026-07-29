@@ -43,6 +43,18 @@ const { chromium } = require("playwright");
 
   await page.waitForTimeout(5000);
 
+  const response = await page.request.get(
+  "https://yoyaku.harp.lg.jp/sapporo/FacilitySearch/SearchUtilizationPurpose?utilizationPurposeName=よさこい"
+);
+
+console.log("利用目的通信ステータス:");
+console.log(response.status());
+
+const text = await response.text();
+
+console.log("通信結果:");
+console.log(text.slice(0,1000));
+
   // 入力欄確認
   const inputs = await page.locator("input").evaluateAll((els) =>
     els.map((e, i) => ({
