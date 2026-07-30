@@ -154,7 +154,71 @@ await page.waitForTimeout(3000);
 
   console.log(result.slice(0,2000));
 
+  // --------------------
+  // 空き状況リンク取得
+  // --------------------
 
+  const availabilityLinks =
+    await page.locator("a").evaluateAll(links =>
+      links
+        .map(a => ({
+          text: a.innerText.trim(),
+          href: a.href
+        }))
+        .filter(x =>
+          x.text.includes("空き状況")
+        )
+    );
+
+
+  console.log("空き状況リンク数:");
+  console.log(availabilityLinks.length);
+
+
+  console.log("空き状況リンク一覧:");
+
+  console.log(
+    availabilityLinks.slice(0,10)
+  );
+
+  // -------------------------
+  // 空き状況チェック
+  // -------------------------
+
+  if (availabilityLinks.length > 0) {
+
+    const url = availabilityLinks[0].href;
+
+    console.log("空き状況ページ確認:");
+    console.log(url);
+
+
+    await page.goto(url, {
+      waitUntil:"networkidle",
+      timeout:60000
+    });
+
+
+    await page.waitForTimeout(3000);
+
+
+    const availabilityText =
+      await page.locator("body").innerText();
+
+
+    console.log("空き状況ページ:");
+
+    console.log(
+      availabilityText.slice(0,3000)
+    );
+
+console.log(
+  "空きあり:",
+  availabilityText.includes("trip_origin")
+);
+
+}
+  
   await browser.close();
 
 
