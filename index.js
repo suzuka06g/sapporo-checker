@@ -106,7 +106,7 @@ const { chromium } = require("playwright");
   // 日付入力
   // -------------------------
 
-  await page.locator("input").nth(6).fill("202608022");
+  await page.locator("input").nth(6).fill("20260822");
 
   console.log("日付入力完了");
 
