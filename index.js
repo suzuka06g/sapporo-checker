@@ -110,7 +110,17 @@ const { chromium } = require("playwright");
 
   console.log("日付入力完了");
 
+  // -------------------------
+// 利用時間帯（夜間）
+// -------------------------
 
+await page.getByText("夜間", {
+  exact: true
+}).click();
+
+console.log("夜間選択完了");
+
+await page.waitForTimeout(2000);
 
   // -------------------------
   // 検索
