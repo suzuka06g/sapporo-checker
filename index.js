@@ -159,6 +159,28 @@ console.log("検索ボタン押下完了");
     resultBodyText.slice(0,3000)
   );
 
+    console.log(
+    resultBodyText.slice(0,3000)
+  );
+
+
+  // -------------------------
+  // 空き状況リンク確認
+  // -------------------------
+
+  const availabilityLinks = await page.locator("a").evaluateAll(links =>
+    links
+      .map(a => ({
+        text: a.innerText,
+        href: a.href
+      }))
+      .filter(x => x.text.includes("空き状況"))
+  );
+
+
+  console.log("空き状況リンク:");
+  console.log(availabilityLinks);
+
 
 
   await browser.close();
