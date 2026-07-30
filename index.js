@@ -3,8 +3,9 @@ const { chromium } = require("playwright");
 (async () => {
 
   const browser = await chromium.launch({
-    headless: true
-  });
+  headless: false,
+  slowMo: 100
+});
 
   const page = await browser.newPage({
     userAgent:
