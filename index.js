@@ -185,44 +185,57 @@ await page.waitForTimeout(3000);
   // 空き状況チェック
   // -------------------------
 
-  if (availabilityLinks.length > 0) {
+  // -------------------------
+// 空き状況チェック（全部見る）
+// -------------------------
 
-    const url = availabilityLinks[0].href;
+for (const facility of availabilityLinks) {
 
-    console.log("空き状況ページ確認:");
-    console.log(url);
-
-
-    await page.goto(url, {
-      waitUntil:"networkidle",
-      timeout:60000
-    });
+  console.log("--------------------");
+  console.log("確認中:");
+  console.log(facility.text);
+  console.log(facility.href);
 
 
-    await page.waitForTimeout(3000);
+  await page.goto(facility.href, {
+    waitUntil:"networkidle",
+    timeout:60000
+  });
 
 
-    const availabilityText =
-      await page.locator("body").innerText();
+  await page.waitForTimeout(3000);
 
 
-    console.log("空き状況ページ:");
+  const availabilityText =
+    await page.locator("body").innerText();
+
+
+  const nightUnavailable =
+    availabilityText.includes("17時45分から21時45分 空きなし");
+
+
+  if(nightUnavailable){
 
     console.log(
-      availabilityText.slice(0,3000)
+      "夜間: 空きなし ❌"
     );
 
-const nightUnavailable =
-  availabilityText.includes("17時45分から21時45分 空きなし");
+  }else{
 
+    console.log(
+      "🎉 夜間: 空きありの可能性あり ⭕"
+    );
 
-if(nightUnavailable){
-  console.log("夜間: 空きなし ❌");
-}else{
-  console.log("夜間: 空きありの可能性あり ⭕");
-}
+    console.log(
+      "施設:",
+      facility.text
+    );
+
+    break;
 
   }
+
+}
 
 await browser.close();
 
