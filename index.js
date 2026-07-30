@@ -43,8 +43,6 @@ const { chromium } = require("playwright");
 
   });
 
-
-
   // 検索ページへ
   await page.goto(
     "https://yoyaku.harp.lg.jp/sapporo/FacilitySearch/Index",
@@ -53,7 +51,6 @@ const { chromium } = require("playwright");
       timeout: 60000
     }
   );
-
 
   console.log("検索画面を開きました！");
 
@@ -68,8 +65,6 @@ const { chromium } = require("playwright");
   console.log("よさこいHTML確認:");
   console.log(firstHtml.includes("よさこい"));
 
-
-
   // -------------------------
   // 利用目的入力
   // -------------------------
@@ -78,19 +73,14 @@ const { chromium } = require("playwright");
 
   console.log("よさこい入力完了");
 
-
   await page.waitForTimeout(2000);
-
 
   // 候補クリック
   await page.getByText("よさこい", {
     exact: true
   }).click();
 
-
   console.log("よさこい選択完了");
-
-
 
   // -------------------------
   // 施設入力
@@ -99,8 +89,6 @@ const { chromium } = require("playwright");
   await page.locator("input").nth(4).fill("学校");
 
   console.log("施設入力完了");
-
-
 
   // -------------------------
   // 日付入力
@@ -141,13 +129,9 @@ console.log("検索ボタン押下完了");
 
   console.log(page.url());
 
-
-
   // 検索結果読み込み待ち
 
   await page.waitForTimeout(5000);
-
-
 
   // -------------------------
   // 結果確認
@@ -162,14 +146,9 @@ console.log("検索ボタン押下完了");
     resultBodyText.includes("ネット申込")
   );
 
-
   console.log("結果:");
 
   console.log(
-    resultBodyText.slice(0,3000)
-  );
-
-    console.log(
     resultBodyText.slice(0,3000)
   );
 
@@ -187,13 +166,9 @@ console.log("検索ボタン押下完了");
       .filter(x => x.text.includes("空き状況"))
   );
 
-
   console.log("空き状況リンク:");
   console.log(availabilityLinks);
 
-
-
   await browser.close();
-
 
 })();
