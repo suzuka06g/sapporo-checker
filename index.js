@@ -212,14 +212,18 @@ await page.waitForTimeout(3000);
       availabilityText.slice(0,3000)
     );
 
-console.log(
-  "空きあり:",
-  availabilityText.includes("trip_origin")
-);
+const nightUnavailable =
+  availabilityText.includes("17時45分から21時45分 空きなし");
 
+
+if(nightUnavailable){
+  console.log("夜間: 空きなし ❌");
+}else{
+  console.log("夜間: 空きありの可能性あり ⭕");
 }
-  
-  await browser.close();
 
+  }
+
+await browser.close();
 
 })();
