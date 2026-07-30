@@ -119,14 +119,15 @@ const { chromium } = require("playwright");
   console.log("検索開始");
 
 
-  await Promise.all([
+  await page.getByText("検索", {
+  exact: true
+}).click();
 
-    page.waitForURL(
-      "**/FacilitySearch/Index?**",
-      {
-        timeout: 10000
-      }
-    ),
+
+console.log("検索ボタン押下完了");
+
+
+await page.waitForTimeout(10000);
 
     page.getByText("検索", {
       exact: true
