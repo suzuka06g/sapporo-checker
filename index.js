@@ -127,14 +127,6 @@ const { chromium } = require("playwright");
 console.log("検索ボタン押下完了");
 
 
-await page.waitForTimeout(10000);
-
-    page.getByText("検索", {
-      exact: true
-    }).click()
-
-
-
   console.log("検索後URL:");
 
   console.log(page.url());
