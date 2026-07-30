@@ -133,8 +133,6 @@ await page.waitForTimeout(10000);
       exact: true
     }).click()
 
-  ]);
-
 
 
   console.log("検索後URL:");
